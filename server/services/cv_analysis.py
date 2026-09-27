@@ -61,6 +61,10 @@ async def analyse_cv(
                     """
                 }
             ],
+            provider={
+                "zdr": True,
+                "data_collection": "deny",
+            },
             response_format = {
                 "type": "json_schema",
                 "json_schema": {
