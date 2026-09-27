@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './App.css'
 
 import { Oval } from "react-loader-spinner"
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar"
+import "react-circular-progressbar/dist/styles.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? ''
 
@@ -26,49 +28,35 @@ function getWordCountError(label, text) {
 async function analyseCv(jobDescription, cv) {
   const response = await fetch(`${API_BASE_URL}/api/analyse`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ job_description: jobDescription, cv }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      job_description: jobDescription,
+      cv: cv,
+    }),
   })
 
+  const data = await response.json()
+  
   if (!response.ok) {
-    let message = `Request failed with status ${response.status}`
-    try {
-      const data = await response.json()
-      if (data?.detail) {
-        if (typeof data.detail === 'string') {
-          message = data.detail
-        } else if (Array.isArray(data.detail)) {
-          message = data.detail
-            .map((item) => {
-              if (typeof item === 'string') return item
-              return item?.msg ?? JSON.stringify(item)
-            })
-            .join(' ')
-        } else {
-          message = JSON.stringify(data.detail)
-        }
-      }
-    } catch {
-      // Body was not JSON; keep the default message.
-    }
-    throw new Error(message)
+    throw new Error(data.detail || 'Failed to analyse CV')
   }
 
-  return response.json()
+  return data
 }
 
 function App() {
+
   const [jobDescription, setJobDescription] = useState('')
   const [cv, setCv] = useState('')
+
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
   const [jobDescriptionError, setJobDescriptionError] = useState('')
   const [cvError, setCvError] = useState('')
-  const [lastCvText, setLastCvText] = useState('')
-  const [lastJobDescText, setLastJobDescText] = useState('')
-
-
 
   const jobDescriptionCount = countWords(jobDescription)
   const cvCount = countWords(cv)
@@ -91,20 +79,10 @@ function App() {
       return
     }
 
+    setResult(null)
     setLoading(true)
     try {
-      if (lastCvText.localeCompare(cv) == 0 || lastJobDescText.localeCompare(jobDescription) == 0) {
-        throw new Error("The CV or job description is the same as before.")
-      }
-
-      const jobText = jobDescription
-      const cvText = cv
-
-      const data = await analyseCv(jobText, cvText)
-
-      setLastCvText(cvText)
-      setLastJobDescText(jobText)
-
+      const data = await analyseCv(jobDescription, cv)
       setResult(data)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong.')
@@ -185,10 +163,11 @@ function App() {
         <section className="result">
           <h2>Analysing your CV</h2>
           <Oval
-            height={40}
-            width={40}
-            color="#6366f1"
-            secondaryColor='#888899'
+            height={80}
+            width={80}
+            strokeWidth={2}
+            color="#8b5e3c"
+            secondaryColor='#e7ddd2'
             visible={true}
             ariaLabel="loading"
           />
@@ -199,8 +178,17 @@ function App() {
         <section className="result">
           <h2>Analysis result</h2>
           <div className="score">
-            {result.score}
-            <span> / 100</span>
+            <CircularProgressbar
+              value={result.score}
+              text={`${result.score} / 100`}
+              styles={buildStyles({
+                pathColor: getColorScore(result.score),
+                trailColor: '#e7ddd2',
+                textColor: getColorScore(result.score),
+                textSize: '18px'
+              })}
+              strokeWidth={5}
+            />
           </div>
           <p className="summary">{result.summary}</p>
           <h3>Recommendations</h3>
@@ -217,6 +205,12 @@ function App() {
       )}
     </main>
   )
+}
+
+function getColorScore(number) {
+  if (number < 40) { return "#e10d02"  } 
+  if (number < 70) { return "#b37b03"  }
+  return "#08a803" 
 }
 
 export default App

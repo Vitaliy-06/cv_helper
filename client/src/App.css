@@ -1,17 +1,31 @@
 .app {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 25px auto;
   padding: 40px 20px;
+
+  background: #ffffff;
+  border: 1px solid #d6c3ad;
+  border-radius: 18px;
+
+  box-shadow: 0 8px 25px rgba(91, 63, 42, 0.08);
 }
 
 .app-header {
   text-align: center;
   margin-bottom: 30px;
+  padding: 10px;
 }
 
 .app-header h1 {
   margin-bottom: 10px;
+  color: #5b3f2a;
 }
+
+.app-header p {
+  color: #6b5a4a;
+}
+
+/* Form */
 
 .analyse-form {
   display: flex;
@@ -27,40 +41,65 @@
 
 .field label {
   font-weight: bold;
+  color: #4b3625;
 }
 
 .field textarea {
-  padding: 10px;
+  padding: 12px;
   font: inherit;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+
+  border: 1px solid #cdbba5;
+  border-radius: 8px;
+
+  background: #fffdf9;
+  color: #3f3024;
+
   min-height: 120px;
   resize: vertical;
 }
 
+.field textarea:focus {
+  outline: none;
+  border-color: #8b5e3c;
+}
+
+.field textarea::placeholder {
+  color: #a99a8a;
+}
+
+/* Word count */
+
 .word-count {
   font-size: 12px;
-  color: #6b7280;
+  color: #8a7867;
 }
 
 .field-error {
   font-size: 13px;
-  color: #b91c1c;
+  color: #a33a2b;
 }
+
+/* Button */
 
 .submit-button {
   width: fit-content;
-  padding: 10px 20px;
+
+  padding: 11px 22px;
+
   border: 0;
-  border-radius: 5px;
-  background: #9333ea;
-  color: white;
+  border-radius: 8px;
+
+  background: #8b5e3c;
+  color: #ffffff;
+
   font: inherit;
+  font-weight: 600;
+
   cursor: pointer;
 }
 
 .submit-button:hover {
-  background: #7e22ce;
+  background: #6f472d;
 }
 
 .submit-button:disabled {
@@ -68,36 +107,71 @@
   cursor: not-allowed;
 }
 
+/* Error */
+
 .error {
   margin-top: 20px;
-  padding: 10px;
-  background: #fee2e2;
-  color: #b91c1c;
-  border-radius: 5px;
+  padding: 12px;
+
+  background: #f8e4df;
+  color: #9b382b;
+
+  border: 1px solid #e8c4bc;
+  border-radius: 8px;
 }
+
+/* Result */
 
 .result {
   margin-top: 25px;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: #f8f8f8;
+
+  border: 1px solid #d6c3ad;
+  border-radius: 12px;
+
+  background: #fffdf9;
+
+  animation: resultAppear 1s ease-out;
 }
+@keyframes resultAppear { from { opacity: 0; } to { opacity: 1; } }
 
 .result h2 {
   margin-top: 0;
+  color: #5b3f2a;
+}
+
+.result h3 {
+  color: #6f472d;
 }
 
 .score {
-  font-size: 40px;
-  font-weight: bold;
-  color: #9333ea;
+  width: 80px;
+  margin: 20px auto;
+  color: #8b5e3c;
 }
 
 .summary {
   margin: 15px 0;
+  color: #4b3a2d;
+  line-height: 1.6;
+}
+
+.result ul {
+  padding-left: 20px;
 }
 
 .result li {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  color: #4b3a2d;
+}
+
+.empty {
+  color: #8a7867;
+}
+
+/* Loading spinner */
+
+.result svg {
+  display: block;
+  margin: 15px auto;
 }
