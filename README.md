@@ -40,6 +40,17 @@ API key:
 AI_KEY=your_openrouter_api_key
 ```
 
+You can also add `FRONTEND_URL` to this file. The server only accepts requests
+from this address (CORS). If you do not set it, the server uses
+`http://localhost:5173`:
+
+```
+FRONTEND_URL=http://localhost:5173
+```
+
+Set it to your front end address when you deploy the app, so the server accepts
+requests from the real site.
+
 Then install the packages and start the server:
 
 ```
