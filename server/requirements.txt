@@ -1,0 +1,6 @@
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+python-dotenv==1.2.3
+pydantic==2.12.5
+openrouter==1.2.21
+slowapi==0.1.10
