@@ -1,4 +1,5 @@
 # CV Helper
+[Open CV Helper](https://cv-helper-tyzv.onrender.com/)
 
 CV Helper is a web app that checks a CV against a job description. It uses AI to
 compare the two texts and shows you how well they match.
@@ -58,7 +59,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-The server runs on http://127.0.0.1:8000.
+The server runs on http://127.0.0.1:8000 (default).
 
 ## Run the client
 
