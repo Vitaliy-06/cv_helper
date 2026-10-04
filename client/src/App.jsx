@@ -10,6 +10,51 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? ''
 const MIN_WORDS = 100
 const MAX_WORDS = 700
 
+const SAMPLE_JOB_DESCRIPTION = `We are looking for a Frontend Developer to join our growing team. You will build and maintain web applications using React and modern JavaScript, and you will work closely with designers and backend developers to deliver high quality user interfaces.
+
+Responsibilities:
+- Develop new user-facing features using React.
+- Build reusable components and front-end libraries for future use.
+- Translate designs and wireframes into high quality code.
+- Optimize components for maximum performance across different devices and browsers.
+- Collaborate with the team in code reviews and planning meetings.
+
+Requirements:
+- Two or more years of experience with JavaScript and React.
+- Strong knowledge of HTML, CSS, and responsive design.
+- Experience consuming REST APIs and using Git.
+- Familiarity with testing tools such as Jest.
+- Good communication skills and strong attention to detail.
+
+Nice to have:
+- Experience with TypeScript and Vite.
+- Understanding of accessibility and web performance.
+- A portfolio of personal or open source projects.`
+
+const SAMPLE_CV = `Junior Frontend Developer with two years of experience building responsive web applications. Skilled in JavaScript, React, HTML, and CSS, and comfortable working with REST APIs, Git, and modern build tools.
+
+Experience
+Frontend Developer, Bright Web Studio (2022 - 2024)
+- Built reusable React components for an e-commerce platform.
+- Improved page load time by thirty percent through code splitting and lazy loading.
+- Worked closely with designers to turn Figma mockups into responsive layouts.
+- Fixed bugs and wrote unit tests with Jest.
+
+Projects
+Task Manager App: a single page application built with React and Vite that lets users create and organise tasks. It uses local storage to save data.
+Weather Dashboard: a small app that fetches data from a public weather API and displays a five day forecast.
+
+Skills
+- Languages: JavaScript, HTML, CSS, and basic TypeScript.
+- Libraries: React and React Router.
+- Tools: Git, Vite, Jest, and Figma.
+- Soft skills: teamwork, communication, and problem solving.
+
+Education
+Bachelor of Computer Science, State University, 2022.
+
+I am looking for a Frontend Developer role where I can grow and build accessible, user friendly interfaces.`
+
 function countWords(text) {
   return text.trim().split(/\s+/).filter((word) => word !== '').length
 }
@@ -63,6 +108,15 @@ function App() {
 
   const canSubmit = jobDescription.trim() !== '' && cv.trim() !== '' && !loading
 
+  const loadExample = () => {
+    setJobDescription(SAMPLE_JOB_DESCRIPTION)
+    setCv(SAMPLE_CV)
+    setJobDescriptionError('')
+    setCvError('')
+    setError('')
+    setResult(null)
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     setError('')
@@ -99,6 +153,15 @@ function App() {
           Analyse your CV against a job description and get a match score with
           recommendations.
         </p>
+        <p className="privacy-note">
+          You do not need to include your name or other personal details. The
+          analysis only looks at your skills and experience. Your text is sent to
+          an AI provider that does not collect, store, or train on your data (no
+          data collection, no retention).
+        </p>
+        <button type="button" className="example-button" onClick={loadExample}>
+          Load an example
+        </button>
       </header>
 
       <form className="analyse-form" onSubmit={handleSubmit}>

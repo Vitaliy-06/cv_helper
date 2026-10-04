@@ -25,6 +25,36 @@
   color: #6b5a4a;
 }
 
+/* Privacy notice */
+
+.privacy-note {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #6b5a4a;
+  opacity: 0.75;
+}
+
+/* Example button */
+
+.example-button {
+  padding: 8px 16px;
+
+  border: 1px solid #8b5e3c;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #8b5e3c;
+
+  font: inherit;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.example-button:hover {
+  background: #f3e9df;
+}
+
 /* Form */
 
 .analyse-form {
